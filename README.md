@@ -26,9 +26,13 @@ docker run -d --name tarefas-back --network mynetwork -p 3000:3000 tarefas-back
 3. vars .env
 
  Define a URL de conexão com o MongoDB para o ambiente de produção
-ENV MONGODB_URI="mongodb://root:example@mongo:27017"  
+ ```
+ENV MONGODB_URI="mongodb://root:example@mongo:27017"
+```
 Define a variável de ambiente PORTA com o valor 3000, que será a porta da aplicação
-ENV PORTA=3000  
+```
+ENV PORTA=3000
+```
 
 4. img no docker hub
 
