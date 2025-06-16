@@ -1,0 +1,29 @@
+apiVersion: apps/v1 # Especifica a versão da API do Kubernetes para o objeto Deployment.
+kind: Deployment # Define o tipo de objeto Kubernetes como um Deployment.
+metadata: # Contém metadados sobre o Deployment.
+  name: backend-deployment # O nome do Deployment.
+spec: # Define o estado desejado do Deployment.
+  replicas: 1 # Especifica que uma única réplica (instância) do pod do aplicativo deve ser executada.
+  selector: # Define como o Deployment encontra os Pods que ele gerencia.
+    matchLabels: # Os Pods gerenciados por este Deployment devem ter o label `app: backend`.
+      app: backend
+  template: # Define o template para os Pods que serão criados.
+    metadata: # Metadados para os Pods.
+      labels: # Labels aplicados aos Pods.
+        app: backend # Label para corresponder ao `selector` do Deployment.
+    spec: # Especificação do Pod.
+      containers: # Define os contêineres que serão executados dentro do Pod.
+        - name: backend # O nome do contêiner.
+          image: tarefas-back:v1  # A imagem Docker a ser usada para este contêiner. Substitua pela sua imagem e tag reais.
+          env: # Define variáveis de ambiente para o contêiner.
+            - name: MONGODB_URI # String de conexão para o MongoDB.
+              value: "mongodb://root:mongodb@mongodb-service:27017" # Conecta ao Service 'mongodb-service' na porta 27017 com as credenciais root/example.
+            - name: PORTA # Variável de ambiente para definir a porta da aplicação backend.
+              value: "3000" # A aplicação backend escutará na porta 3000.
+          ports: # Define as portas que o contêiner expõe.
+            - containerPort: 3000 # O contêiner escuta na porta 3000.
+          resources: # Define os limites de recursos para o contêiner.
+            limits: # Limites máximos de recursos que o contêiner pode consumir.
+              memory: "512Mi" # Limite de memória de 512 Mebibytes.
+              cpu: "1000m" # Limite de CPU de 1 CPU (1000 millicores).
+---
